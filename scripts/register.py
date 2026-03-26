@@ -80,7 +80,7 @@ def build_entry(data: dict) -> dict:
         "id": str(uuid.uuid4()),
         "path": data["path"],
         "filename": path.name,
-        "type": "html" if path.suffix == ".html" else "md",
+        "type": "html",
         "project": data.get("project", ""),
         "topic": data.get("topic", ""),
         "description": data.get("description", ""),

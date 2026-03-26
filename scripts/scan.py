@@ -61,7 +61,7 @@ def scan(root: str, center_dir: str) -> list:
         ]
 
         for filename in filenames:
-            if not (filename.endswith(".html") or filename.endswith(".md")):
+            if not filename.endswith(".html"):
                 continue
 
             filepath = current / filename
@@ -72,7 +72,7 @@ def scan(root: str, center_dir: str) -> list:
             results.append({
                 "path": str(filepath),
                 "filename": filename,
-                "type": "html" if filename.endswith(".html") else "md",
+                "type": "html",
                 "size_bytes": stat.st_size,
                 "created_at": datetime.fromtimestamp(stat.st_birthtime).strftime("%Y-%m-%d")
                     if hasattr(stat, "st_birthtime")

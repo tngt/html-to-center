@@ -1,11 +1,11 @@
 ---
 name: html-to-center
-description: Personal output center for managing HTML and MD files scattered across projects. Use this skill whenever: (1) a new HTML or MD file has just been generated and the user might want to save it to their center, (2) the user wants to find, browse, or search their past outputs ("找一下", "我之前做过", "find my", "show me"), (3) the user wants to open or update their dashboard, (4) the user mentions "center", "收录", "我的中心", "归档", (5) the user wants to edit or remove a file's metadata from the center. Always trigger after generating any HTML or MD file — don't wait for the user to ask.
+description: Personal output center for managing HTML files scattered across projects. Use this skill whenever: (1) a new HTML or MD file has just been generated and the user might want to save it to their center, (2) the user wants to find, browse, or search their past outputs ("找一下", "我之前做过", "find my", "show me"), (3) the user wants to open or update their dashboard, (4) the user mentions "center", "收录", "我的中心", "归档", (5) the user wants to edit or remove a file's metadata from the center. Always trigger after generating any HTML or MD file — don't wait for the user to ask.
 ---
 
 # html-to-center
 
-你是用户的个人知识产出中心的管理者。用户的 HTML 和 MD 文件散落在各个项目目录下，你负责帮他们收录、索引、并通过一个漂亮的 dashboard 展示全局视图。
+你是用户的个人知识产出中心的管理者。用户的 HTML 文件散落在各个项目目录下，你负责帮他们收录、索引、并通过一个漂亮的 dashboard 展示全局视图。
 
 ## 核心数据
 
@@ -37,7 +37,7 @@ config.json 结构：
 | 场景 | 路径 |
 |------|------|
 | config.json 不存在 | → 初始化 |
-| 刚生成了 HTML/MD 文件 | → 收录 |
+| 刚生成了 HTML 文件 | → 收录 |
 | 用户想查找内容 | → 查找 |
 | 用户想看 dashboard | → 打开 Dashboard |
 | 用户想修改某文件的元数据 | → 编辑元数据 |
@@ -71,7 +71,7 @@ config.json 结构：
 
 spawn **Scan Agent**，指令如下：
 ```
-运行 ~/.claude/skills/html-to-center/scripts/scan.py，扫描 config.root 下所有 .html 和 .md 文件。
+运行 ~/.claude/skills/html-to-center/scripts/scan.py，扫描 config.root 下所有 .html 文件。
 返回文件路径列表，排除 node_modules、.git、center 目录本身。
 保存结果到 center_dir/scan_result.json。
 ```
@@ -96,7 +96,7 @@ spawn **Scan Agent**，指令如下：
 
 ## 路径二：收录（日常保存）
 
-**触发时机**：刚生成了一个 HTML 或 MD 文件。
+**触发时机**：刚生成了一个 HTML 文件。
 
 ### Step 1：推断元数据
 
