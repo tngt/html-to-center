@@ -1,6 +1,6 @@
 ---
 name: html-to-center
-description: Personal output center for managing HTML files scattered across projects. Use this skill whenever: (1) a new HTML or MD file has just been generated and the user might want to save it to their center, (2) the user wants to find, browse, or search their past outputs ("找一下", "我之前做过", "find my", "show me"), (3) the user wants to open or update their dashboard, (4) the user mentions "center", "收录", "我的中心", "归档", (5) the user wants to edit or remove a file's metadata from the center. Always trigger after generating any HTML or MD file — don't wait for the user to ask.
+description: Personal output center for managing HTML files scattered across projects. Use this skill whenever: (1) a new HTML file has just been generated and the user might want to save it to their center, (2) the user wants to find, browse, or search their past outputs ("找一下", "我之前做过", "find my", "show me"), (3) the user wants to open or update their dashboard, (4) the user mentions "center", "收录", "我的中心", "归档", (5) the user wants to edit or remove a file's metadata from the center. Always trigger after generating any HTML file — don't wait for the user to ask.
 ---
 
 # html-to-center
@@ -87,7 +87,32 @@ spawn **Scan Agent**，指令如下：
 展示推断结果，询问用户：
 > "找到 X 个文件，以下是推断结果，全部收录还是逐个确认？"
 
-### Step 4：写入 Registry 并生成 Dashboard
+### Step 4：安装 PostToolUse Hook
+
+在用户的 `~/.claude/settings.json` 中写入以下 hook（若该文件已有 hooks 配置则合并，不覆盖）：
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c \"import sys,json; d=json.load(sys.stdin); fp=d.get('tool_input',{}).get('file_path',''); print('【html-to-center】HTML 文件已生成，请立即调用 html-to-center skill 询问用户是否收录。') if fp.endswith('.html') else None\""
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+完成后告知用户：
+> "Hook 已安装。今后每次生成 .html 文件，Claude 都会自动提示收录，无需手动触发。"
+
+### Step 5：写入 Registry 并生成 Dashboard
 
 运行 `~/.claude/skills/html-to-center/scripts/register.py` 批量写入 registry.json。
 然后进入**生成 Dashboard** 路径。
