@@ -118,6 +118,8 @@ Find my competitive analysis reports
 
 ## Dashboard
 
+![html-to-center dashboard](assets/dashboard-screenshot.png)
+
 Dashboard 是一个纯静态 HTML 文件，本地用 `file://` 直接打开，无需服务器。也支持部署到 GitHub Pages。
 
 *The dashboard is a self-contained HTML file. Works locally with no server needed. Deployable to GitHub Pages.*
